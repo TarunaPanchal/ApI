@@ -1,0 +1,106 @@
+<html>
+    <body>
+            <fieldset><legend>Details</legend>
+        <table>
+       
+            <tr><td><label>Name:</label></td><td><input type="text" id="name" placeholder="Enter Name"></td></tr>
+            <tr><td><label>Subject :</label></td><td><input type="text" id="subject" placeholder="Enter Subject"></td></tr>
+            <tr><td><label>Age :</label></td><td><input type="age" id="age" placeholder="Enetr Age"></td></tr>
+                 
+             <tr>             
+             <td><input type="button" value="Submit" id="add" onclick="adddetail()"></td>
+             <td><input type="button" value="Clear All Data" id="clear" onclick="clearAll()"></td>
+            </tr>
+        
+     </table>
+    </fieldset>
+    <br>
+    <br>
+     <table id="table1" border="1">
+         <tr id="row">
+             <th>NAME</th>
+             <th>SUBJECT</th>
+             <th>AGE</th>
+         </tr>
+     </table>
+       <script>
+           var detailArray = [];
+            window.onload = init;
+           function adddetail()
+           {
+                var a = {
+                    name:document.getElementById("name").value,
+                    subject:document.getElementById("subject").value,
+                    age:document.getElementById("age").value
+                };
+                if(a.name!==""&&a.subject!==""&&a.age!=="")
+                {
+                    detailArray = JSON.parse(localStorage.getItem("a")) || [];
+                    detailArray.push(a);
+                    localStorage.setItem("a",JSON.stringify(detailArray));
+                    detailArray = localStorage.getItem("a");
+                    detailArray = JSON.parse(detailArray);
+
+
+                    for(var i=0;i<detailArray.length; i++)
+                    {
+                        var row = table1.insertRow(1);
+
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+
+                        cell1.innerHTML = detailArray[i].name;
+                        cell1.innerHTML = detailArray[i].subject;
+                        cell1.innerHTML = detailArray[i].age;
+
+                    }
+                     window.location.reload(true);
+                }
+           }
+           function clearAll()
+           {
+
+               localStorage.clear();
+                window.location.reload(true);
+           }
+
+           function show(a)
+           {
+               var table = document.getElementById("table1");
+               var row = document.createElement("tr");
+               var cell1 =document.createElement("td");
+               var cell2 =document.createElement("td");
+               var cell3 =document.createElement("td");
+
+               cell1.innerHTML = a.name;
+               cell2.innerHTML = a.subject;
+               cell3.innerHTML = a.age;
+
+
+               row.appendChild(cell1);
+               row.appendChild(cell2);
+               row.appendChild(cell3);
+               
+               table.appendChild(row);
+
+            //    document.querySelector('wlc #title').innerHTML =a.name+"'s";
+
+           }
+           function getdata()
+           {
+               return JSON.parse(localStorage.getItem("a"));
+           }
+
+           function init()
+           {
+               var detailArray = getdata();
+               for (var i=0;i<detailArray.length;i++)
+               {
+                   var a = detailArray[i];
+                   show(a);
+               }
+           }
+       </script>
+    </body>
+</html> 
