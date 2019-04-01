@@ -114,7 +114,7 @@
         storage: multer.diskStorage({
           destination: (req, file, callback) => {
             let type = req.params.type;
-            let path = `./uploads/${type}`;
+            let path = `./Uploads/${type}`;
             fs.mkdirsSync(path);
             callback(null, path);
           },
